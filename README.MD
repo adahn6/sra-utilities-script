@@ -1,6 +1,6 @@
 This script is designed to replicate the failover XML file creation from SRDF Adapter Utilities for vCenter. While there is other functionality offered by SRDF Adapter Utilities, this script only address the failover pairing file creation. Additionally, 
 note that this is not designed to be as robust as the vCenter plugin. Instead, this script targets the most common use cases (two site, one local SMI-S array, etc). While we are unlikely to support new additions to the script, feel free to file an issue
- if you come across any bugs-- we'll try to respond as we can.
+ if you come across any bugs-- we'll try to respond as we can. For more info, check out [Drew Tonnesen's blog post on the script](https://drewtonnesen.wordpress.com/2017/03/17/srdf-sra-srdf-au-and-vcsa/).
 
 ## Pre-requisites:
 
@@ -22,7 +22,8 @@ VCENTER_PASS = “password”
 COPY_TYPE = “SNAPVX”
 COPY_MODE = “NOCOPY”
 
-FILENAME = “EmcSrdfSraTestFailoverConfig.xml”```
+FILENAME = “EmcSrdfSraTestFailoverConfig.xml”
+```
 
 
 ## Notes:
