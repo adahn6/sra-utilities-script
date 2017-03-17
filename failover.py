@@ -13,20 +13,20 @@ from lxml import etree as ET
 from pyVim.connect import Disconnect, SmartConnectNoSSL
 from pyVmomi import vim
 
-SMIS_IP = ""
-SMIS_PORT = ""
-SMIS_USER = ""
-SMIS_PASS = ""
+SMIS_IP = "http://192.168.1.1"
+SMIS_PORT = "5988"
+SMIS_USER = "admin"
+SMIS_PASS = "#1Password"
 
-VCENTER_IP = ""
-VCENTER_PORT = ""
-VCENTER_USER = ""
-VCENTER_PASS = ""
+VCENTER_IP = "192.168.1.2"
+VCENTER_PORT = "443"
+VCENTER_USER = "administrator@vsphere.local"
+VCENTER_PASS = "password"
 
 COPY_TYPE = "SNAPVX"
 COPY_MODE = "NOCOPY"
 
-FILENAME = "test.xml"
+FILENAME = "EmcSrdfSraTestFailoverConfig.xml"
 
 def parse_vsphere_content(vsphere_conn, debug=False):
     """Return a dictionary with the relevant content from vSphere

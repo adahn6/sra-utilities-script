@@ -9,20 +9,21 @@ note that this is not designed to be as robust as the vCenter plugin. Instead, t
 * An SMI-S environment listening on a non-SSL port. By default, SMI-S 8.3 listens only on SSL 5989. If you need help modifying SMI-S to listen on non-SSL see [this post](https://drewtonnesen.wordpress.com/2016/06/03/vsi-6-9-smi-s-6-0u2/).
 * You will have to modify the script to put in the variables for the Recovery vCenter, SMI-S, copy type and the file name. Here is the top portion of the script that requires updating:
 
-```SMIS_IP = “http://192.168.1.1&#8221;
-SMIS_PORT = “5988”
-SMIS_USER = “admin”
-SMIS_PASS = “#1Password”
+```
+SMIS_IP = "http://192.168.1.1"
+SMIS_PORT = "5988"
+SMIS_USER = "admin"
+SMIS_PASS = "#1Password"
 
-VCENTER_IP = “192.168.1.2”
-VCENTER_PORT = “443”
-VCENTER_USER = “administrator@vsphere.local”
-VCENTER_PASS = “password”
+VCENTER_IP = "192.168.1.2"
+VCENTER_PORT = "443"
+VCENTER_USER = "administrator@vsphere.local"
+VCENTER_PASS = "password"
 
-COPY_TYPE = “SNAPVX”
-COPY_MODE = “NOCOPY”
+COPY_TYPE = "SNAPVX"
+COPY_MODE = "NOCOPY"
 
-FILENAME = “EmcSrdfSraTestFailoverConfig.xml”
+FILENAME = "EmcSrdfSraTestFailoverConfig.xml"
 ```
 
 
