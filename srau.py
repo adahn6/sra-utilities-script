@@ -209,7 +209,7 @@ def find_existing_pairs(conn, symm, luns, source_luns, debug):
                     for source_lun in source_luns:
                         if source_lun["DeviceID"] == pair["SVSourceDeviceID"]:
                             rep_pairs[pair["SVSourceDeviceID"]
-                                      ] = pair["SVTargetDeviceID"]
+                                     ] = pair["SVTargetDeviceID"]
                             source_luns.remove(source_lun)
                             break
     return rep_pairs
@@ -341,7 +341,7 @@ def get_vsphere_conn(debug):
     if not conn:
         print("Could not connect to the specified host using specified "
               "username and password")
-        return -1
+        return None
     atexit.register(Disconnect, conn)
     return conn
 
@@ -376,7 +376,7 @@ def main():
         debug = True
 
     vsphere_conn = get_vsphere_conn(debug)
-    if vsphere_conn is None or vsphere_conn == -1:
+    if vsphere_conn is None:
         print "Error connecting to vSphere system! Exiting script."
         return
     vsphere_content = parse_vsphere_content(vsphere_conn, debug)
