@@ -324,8 +324,10 @@ def filter_used_luns(symm, extents, target_luns, debug):
 def get_symm_conn(debug):
     """Return a connection to SMI-S provider
     """
-    conn = pywbem.WBEMConnection(
-        SMIS_IP + ":" + SMIS_PORT, (SMIS_USER, SMIS_PASS))
+    conn = pywbem.WBEMConnection(SMIS_IP + ":" + SMIS_PORT,
+                                 (SMIS_USER, SMIS_PASS),
+                                 default_namespace='root/emc',
+                                 no_verification=True)
     return conn
 
 
@@ -374,6 +376,9 @@ def main():
         debug = True
 
     vsphere_conn = get_vsphere_conn(debug)
+    if vsphere_conn is None or vsphere_conn == -1:
+        print "Error connecting to vSphere system! Exiting script."
+        return
     vsphere_content = parse_vsphere_content(vsphere_conn, debug)
 
     symm_conn = get_symm_conn(debug)
