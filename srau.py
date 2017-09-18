@@ -368,7 +368,7 @@ def main():
     parser.add_argument('--debug', action='store_true',
                         help='enable debug logging')
     parser.add_argument('--usage', choices=['failover', 'maskinginfo'],
-                        help='create failover XML file')
+                        help='create either failover or masking info XML file')
     args = parser.parse_args()
     if args.debug:
         debug = True
