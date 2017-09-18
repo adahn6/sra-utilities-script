@@ -350,7 +350,7 @@ def get_storage_group(conn, source_devs, debug):
     """Return the storage group for the R2 device passed in
     """
     if len(source_devs) == 0:
-        print("No R2 devices!!")
+        print "No R2 devices!!"
         return -1
 
     storage_group = conn.Associators(
