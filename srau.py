@@ -209,7 +209,7 @@ def find_existing_pairs(conn, symm, luns, source_luns, debug):
                     for source_lun in source_luns:
                         if source_lun["DeviceID"] == pair["SVSourceDeviceID"]:
                             rep_pairs[pair["SVSourceDeviceID"]
-                                     ] = pair["SVTargetDeviceID"]
+                                      ] = pair["SVTargetDeviceID"]
                             source_luns.remove(source_lun)
                             break
     return rep_pairs
@@ -370,7 +370,7 @@ def main():
     parser.add_argument('--debug', action='store_true',
                         help='enable debug logging')
     parser.add_argument('--usage', choices=['failover', 'maskinginfo'],
-                        help='create either failover or masking info XML file')
+                        help='create failover XML file or create masking info and failover XML files')
     args = parser.parse_args()
     if args.debug:
         debug = True
@@ -415,6 +415,7 @@ def main():
         storage_group = get_storage_group(symm_conn, luns["source"], debug)
         if paired:
             print_masking_info(symm, storage_group, rep_pairs, debug)
+            print_xml(symm, rep_pairs, debug)
         else:
             print "Error with pairing! Exiting script."
 
