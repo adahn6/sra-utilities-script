@@ -366,7 +366,7 @@ def main():
     """
     debug = False
     parser = argparse.ArgumentParser(
-        description='Create failover pairing XML file.')
+        description='SRDF Utilies script')
     parser.add_argument('--debug', action='store_true',
                         help='enable debug logging')
     parser.add_argument('--usage', choices=['failover', 'maskinginfo'],
