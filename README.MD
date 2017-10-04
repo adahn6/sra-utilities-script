@@ -6,20 +6,22 @@ note that this is not designed to be as robust as the vCenter plugin. Instead, t
 
 ### Basic help output
 ```
-srau.py [-h] [--debug] [--usage {failover,maskinginfo}]
+srau.py [-h] [--debug] {failover,maskinginfo}
 
 SRDF Utilies script
+
+positional arguments:
+  {failover,maskinginfo}
+                        create failover XML file or create masking info and
+                        failover XML files
 
 optional arguments:
   -h, --help            show this help message and exit
   --debug               enable debug logging
-  --usage {failover,maskinginfo}
-                        create failover XML file or create masking info and
-                        failover XML files
 ```
 
-The usage parameter is the primary parameter; it is used to determine what utility the script will provide. For example, to create a failover XML file, the script should be run as: ```python srau.py --usage=failover```
-while to create failover and masking info XML files, the script should be run as ```python srau.py --usage=maskinginfo```
+The positional argument is the primary parameter; it is used to determine what utility the script will provide. For example, to create a failover XML file, the script should be run as: ```python srau.py failover```
+while to create failover and masking info XML files, the script should be run as ```python srau.py maskinginfo```
 
 ## Environment details:
 * Python 2.7 with packages pywbem, pyVmomi, and lxml.

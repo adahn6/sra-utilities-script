@@ -38,27 +38,34 @@ def parse_vsphere_content(vsphere_conn, debug=False):
     extent_objs = []
     disks = []
 
-    content = vsphere_conn.RetrieveContent()
-    children = content.rootFolder.childEntity
-    for child in children:
-        clusters = child.hostFolder.childEntity
-        for cluster in clusters:
-            for host in cluster.host:
-                scsi_luns.extend(host.config.storageDevice.scsiLun)
-        datastores = child.datastore
-        for datastore in datastores:
-            if hasattr(datastore.info, 'vmfs'):
-                if not datastore.info.vmfs is None:
-                    extent_objs.extend(datastore.info.vmfs.extent)
-        virtual_machines = recurse_folder(child.vmFolder)
-        for virtual_machine in virtual_machines:
-            disks.extend(virtual_machine.config.hardware.device)
+    hosts = get_view(vsphere_conn, [vim.HostSystem])
+    for host in hosts:
+        scsi_luns.extend(host.config.storageDevice.scsiLun)
+
+    datastores = get_view(vsphere_conn, [vim.Datastore])
+    for datastore in datastores:
+        if hasattr(datastore.info, 'vmfs'):
+            if not datastore.info.vmfs is None:
+                extent_objs.extend(datastore.info.vmfs.extent)
+
+    virtual_machines = get_view(vsphere_conn, [vim.VirtualMachine])
+    for virtual_machine in virtual_machines:
+        disks.extend(virtual_machine.config.hardware.device)
 
     content = {}
     content["luns"] = parse_luns(scsi_luns, debug)
     content["extents"] = parse_extents(extent_objs, debug)
     parse_disks(disks, content["extents"], debug)
     return content
+
+def get_view(vsphere_conn, view_type, recursive=True):
+    """Get all objects of a type from the entire vCenter, starting from the root folder
+    """
+    content = vsphere_conn.RetrieveContent()
+    container = content.rootFolder
+    container_view = content.viewManager.CreateContainerView(
+        container, view_type, recursive)
+    return container_view.view
 
 
 def parse_luns(scsi_luns, debug):
@@ -108,18 +115,6 @@ def parse_disks(disks, extents, debug):
                         extents[symm] = [disk.backing.lunUuid[18:-12]]
                     if debug:
                         print "Found vm lun " + disk.backing.lunUuid[18:-12]
-
-
-def recurse_folder(folder):
-    """Recursivelye numerate all VMs in the root VM folder
-    """
-    vms = []
-    for child in folder.childEntity:
-        if isinstance(child, vim.VirtualMachine):
-            vms.append(child)
-        elif isinstance(child, vim.Folder):
-            vms.extend(recurse_folder(child))
-    return vms
 
 
 def get_symm_system(conn, debug):
@@ -369,7 +364,7 @@ def main():
         description='SRDF Utilies script')
     parser.add_argument('--debug', action='store_true',
                         help='enable debug logging')
-    parser.add_argument('--usage', choices=['failover', 'maskinginfo'],
+    parser.add_argument('usage', choices=['failover', 'maskinginfo'],
                         help='create failover XML file or create masking info and failover XML files')
     args = parser.parse_args()
     if args.debug:
